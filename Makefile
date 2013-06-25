@@ -38,7 +38,7 @@ plt: deps $(OBJ_FILES)
 # Run dialyzer for a single or for all modules in ebin.
 MOD?=`find ebin -name '*.beam'`
 d: c
-	dialyzer -r ebin --build_plt --output_plt ~/.dialyzer/plts/ec_test.plt
+	dialyzer -q -r ebin --build_plt --output_plt ~/.dialyzer/plts/ec_test.plt
 	dialyzer $(MOD) -q -nn --plts `find ~/.dialyzer/plts -name '*.plt'` \
 	-Wno_return -Wunmatched_returns -Werror_handling
 
