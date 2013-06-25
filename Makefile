@@ -1,10 +1,12 @@
 # Flags passed to the compile module.
 COMP_FLAGS = +debug_info +warn_shadow_vars
+
 # Flags passed directly to erlc.
 ERLC_FLAGS = -I include -o ebin -Werror -pa src $(COMP_FLAGS)
 
 # The list of all erlang source files.
 ERL_FILES = $(wildcard src/*.erl)
+
 # And the corresponding beam filenames.
 OBJ_FILES = $(addprefix ebin/,$(notdir $(ERL_FILES:.erl=.beam)))
 

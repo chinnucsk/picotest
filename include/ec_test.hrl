@@ -14,17 +14,13 @@
 % You should have received a copy of the GNU General Public License
 % along with ec_test.  If not, see <http://www.gnu.org/licenses/>.
 
--module (ec_test).
--compile (export_all).
--include ("ec_test.hrl").
+-ifndef (EC_TEST_HRL).
+-define (EC_TEST_HRL, true).
 
+% Print to stderr.
+-define (ectStdErr(Format, Args),
+    io:put_chars(standard_error, io_lib:format(Format, Args))).
 
--spec run() -> no_return().
-% The runner's entry routine called from bin/ec_test.
-run() -> run(init:get_plain_arguments()).
+-define (ectStdErr(Format), ?ectStdErr(Format, [])).
 
-
--spec run(ect_args:cmdl_args()) -> no_return().
-% The main entry routine. Split into two functions for testing.
-run(Args) ->
-    io:format("Arguments: ~p~n", [Args]).
+-endif.
