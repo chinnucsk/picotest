@@ -20,27 +20,24 @@ clean:
 
 # Remove all object files and the dependencies.
 cleanall: clean
-	rm -f script/gen_plt
+	rm -f script/gen-plt
 
 # The compile task.
 c: $(OBJ_FILES)
 
 # Fetch and stage any dependencies.
 deps:
-	cd script; file gen_plt >/dev/null || \
-	curl https://raw.github.com/johannesh/edo/basics/build/gen_plt -o gen_plt \
-	&& chmod +x gen_plt
+	cd script; file gen-plt >/dev/null || curl https://raw.github.com/johannesh/edo/basics/build/gen_plt -o gen-plt && chmod +x gen-plt
 
 # Generate or update the dialyzer PLTs for the basic apps and this project.
 plt: deps $(OBJ_FILES)
-	script/gen_plt
+	script/gen-plt
 
 # Run dialyzer for a single or for all modules in ebin.
 MOD?=`find ebin -name '*.beam'`
 d: c
 	dialyzer -q -r ebin --build_plt --output_plt ~/.dialyzer/plts/ec_test.plt
-	dialyzer $(MOD) -q -nn --plts `find ~/.dialyzer/plts -name '*.plt'` \
-	-Wno_return -Wunmatched_returns -Werror_handling
+	dialyzer $(MOD) -q -nn --plts `find ~/.dialyzer/plts -name '*.plt'` -Wno_return -Wunmatched_returns -Werror_handling
 
 # Compile the corresponding .beam file for each erlang source file.
 ebin/%.beam: src/%.erl
