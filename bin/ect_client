@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -z $ECT_MASTER ]; then
+    echo "\033[31mPlease specify a master node using:\n" \
+         "  ECT_MASTER=\"...\" $0" 1>&2
+    exit 1
+fi
+
+beam_dir=$(dirname $0)/../ebin
+beam_args="+K true"
+
+erl -connect_all false -noshell -pa $beam_dir $beam_args \
+    -run ect_client run -s erlang halt -extra $@

@@ -14,7 +14,17 @@
 % You should have received a copy of the GNU General Public License
 % along with ec_test.  If not, see <http://www.gnu.org/licenses/>.
 
--ifndef (EC_TEST_HRL).
--define (EC_TEST_HRL, true).
+-module (ect_master).
+-include ("ect_internal.hrl").
+-compile (export_all).
 
--endif. % EC_TEST_HRL
+
+-spec run() -> no_return().
+% The runner's entry routine called from bin/ect_master.
+run() -> run(init:get_plain_arguments()).
+
+
+-spec run([string()]) -> no_return().
+% The main entry routine. Split into two functions for testing.
+run(Args) ->
+    io:format("Arguments: ~p~nNode: ~p~n", [Args, node()]).

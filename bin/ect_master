@@ -1,0 +1,7 @@
+#!/bin/sh
+
+beam_dir=$(dirname $0)/../ebin
+beam_args="+K true +A 32"
+
+erl -connect_all false -noshell -name ect_master -pa $beam_dir $beam_args \
+    -run ect_master run

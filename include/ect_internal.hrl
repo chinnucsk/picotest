@@ -14,7 +14,26 @@
 % You should have received a copy of the GNU General Public License
 % along with ec_test.  If not, see <http://www.gnu.org/licenses/>.
 
--ifndef (EC_TEST_HRL).
--define (EC_TEST_HRL, true).
+-ifndef (ECT_INTERNAL_HRL).
+-define (ECT_INTERNAL_HRL, true).
 
--endif. % EC_TEST_HRL
+-include ("ec_test.hrl").
+
+
+% Print to stderr in red.
+-define (ectStdErr(Format, Args),
+    io:put_chars(standard_error,
+        io_lib:format("(~s:~p) \033[31m" Format "\033[0m~n",
+            [?FILE, ?LINE] ++ Args))).
+
+-define (ectStdErr(Format), ?ectStdErr(Format, [])).
+
+
+% Short form of a case-statement.
+-define (ectOnlyIf(Predicate, Then),
+    case
+        Predicate -> Then;
+        Id -> Id
+    end).
+
+-endif. % ECT_INTERNAL_HRL
